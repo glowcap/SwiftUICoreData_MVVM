@@ -9,12 +9,20 @@ import SwiftUI
 
 @main
 struct SwiftUICoreData_MVVMApp: App {
-    let persistenceController = PersistenceController.shared
-
-    var body: some Scene {
-        WindowGroup {
-            ContentView()
-                .environment(\.managedObjectContext, persistenceController.container.viewContext)
-        }
+  @Environment(\.scenePhase) var scenePhase
+  
+  let coreDataManager = CoreDataManager.shared
+  
+  var body: some Scene {
+    WindowGroup {
+      DashboardView(dataManager: coreDataManager)
+        .environment(\.managedObjectContext, coreDataManager.container.viewContext)
     }
+    .onChange(of: scenePhase) { phase in
+      guard phase == .background else { return }
+      /// save on backgrounding
+      // coreDataManager.save()
+    }
+  }
+  
 }
