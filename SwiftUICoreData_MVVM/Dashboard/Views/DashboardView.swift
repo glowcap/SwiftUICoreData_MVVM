@@ -9,6 +9,8 @@ import SwiftUI
 import CoreData
 
 struct DashboardView: View {
+  @Environment(\.managedObjectContext) private var context
+  
   /// although the fetchRequest stays in the view, the configuration
   /// of the fetch request can be moved to the view model
   @FetchRequest(fetchRequest: Player.fetch(), animation: .default)
@@ -18,15 +20,13 @@ struct DashboardView: View {
   /// the Pubishers to function properly
   private var players: FetchedResults<Player>
   
+  let viewModel = DashboardViewModel()
+  
+  @State var dataManager = CoreDataManager.shared
+  
   
   @FetchRequest(fetchRequest: Game.fetch(), animation: .default)
   private var games: FetchedResults<Game>
-  
-  let vm: DashboardViewModel
-  
-  init(dataManager: CoreDataManager) {
-    vm = DashboardViewModel(coreDataManager: dataManager)
-  }
   
   var body: some View {
     NavigationView {
@@ -37,7 +37,9 @@ struct DashboardView: View {
             HStack {
               ForEach(players) { player in
                 NavigationLink {
-                  PlayerDetailsView()
+                  PlayerDetailsView(
+                    viewModel: viewModel.playerDetailsViewModel(dataManager: dataManager, player: player)
+                  )
                 } label: {
                   PlayerCard(player: player)
                     .padding(.vertical)
@@ -80,7 +82,7 @@ struct DashboardView: View {
           }
           HStack(spacing: 20) {
             NavigationLink {
-              PlayerDetailsView()
+//              PlayerDetailsView(viewModel: vm.playerDetailsViewModel())
             } label: {
               HStack {
                 Image(systemName: "plus")
@@ -103,7 +105,7 @@ struct DashboardView: View {
             .shadow(color: .seafoam.opacity(0.4), radius: 4, x: 0, y: 0)
             .shadow(color: .bluesClues.opacity(0.4), radius: 4, x: 4, y: 4)
             NavigationLink {
-              PlayerDetailsView()
+//              PlayerDetailsView(viewModel: vm.playerDetailsViewModel())
             } label: {
               HStack {
                 Image(systemName: "plus")
@@ -146,7 +148,7 @@ struct DashboardView: View {
   
   private func addPlayer() {
     withAnimation {
-      vm.addPlayer(name: "NewPlayer\(players.count)")
+//      viewModel.addPlayer(name: "NewPlayer\(players.count)")
     }
   }
   
@@ -154,7 +156,7 @@ struct DashboardView: View {
     withAnimation {
       for index in offsets {
         let player = players[index]
-        vm.delete(player: player)
+//        viewModel.delete(player: player)
       }
     }
   }
@@ -166,7 +168,7 @@ struct DashboardView: View {
 /// of use when manipulating the preview content
 extension CoreDataManager {
   
-  static var DashboardPreviewDataManger: CoreDataManager {
+  static var dashboardPreviewDataManger: CoreDataManager {
     let result = CoreDataManager(inMemory: true)
     let context = result.container.viewContext
     
@@ -194,10 +196,10 @@ extension CoreDataManager {
 
 struct DashboardView_Previews: PreviewProvider {
     static var previews: some View {
-      DashboardView(dataManager: CoreDataManager.DashboardPreviewDataManger)
+      DashboardView()
         .environment(
           \.managedObjectContext,
-           CoreDataManager.DashboardPreviewDataManger.container.viewContext
+           CoreDataManager.dashboardPreviewDataManger.container.viewContext
         )
     }
 }

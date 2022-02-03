@@ -15,13 +15,13 @@ struct SwiftUICoreData_MVVMApp: App {
   
   var body: some Scene {
     WindowGroup {
-      DashboardView(dataManager: coreDataManager)
+      DashboardView()
         .environment(\.managedObjectContext, coreDataManager.container.viewContext)
     }
     .onChange(of: scenePhase) { phase in
       guard phase == .background else { return }
       /// save on backgrounding
-      // coreDataManager.save()
+      // dataManager.save()
     }
   }
   

@@ -40,4 +40,15 @@ extension Game: Model {
     game.title = "World of Warhammer 24k"
     return game
   }
+  
+  static func exampleSet(context: NSManagedObjectContext) -> [Game] {
+    var games = [Game]()
+    for i in 0..<5 {
+      let game = Game.example(context: context)
+      game.title += "\(i)"
+      games.append(game)
+    }
+    return games
+  }
+  
 }

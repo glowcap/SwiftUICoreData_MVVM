@@ -11,6 +11,8 @@
 		4A8E3C3527A970110043C9DB /* Color+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8E3C3427A970110043C9DB /* Color+.swift */; };
 		4A8E3C3A27A977290043C9DB /* PlayerCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8E3C3927A977290043C9DB /* PlayerCard.swift */; };
 		4A8E3C3C27A978000043C9DB /* PrimaryBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8E3C3B27A978000043C9DB /* PrimaryBackgroundView.swift */; };
+		4A8E3C4027A9F8420043C9DB /* PlayerDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8E3C3F27A9F8420043C9DB /* PlayerDetailsViewModel.swift */; };
+		4A8E3C4227A9F9620043C9DB /* EditViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8E3C4127A9F9620043C9DB /* EditViewModelProtocol.swift */; };
 		4ACCC19627A8241800F96F31 /* SwiftUICoreData_MVVMApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACCC19527A8241800F96F31 /* SwiftUICoreData_MVVMApp.swift */; };
 		4ACCC19827A8241800F96F31 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACCC19727A8241800F96F31 /* DashboardView.swift */; };
 		4ACCC19A27A8241900F96F31 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4ACCC19927A8241900F96F31 /* Assets.xcassets */; };
@@ -50,6 +52,8 @@
 		4A8E3C3427A970110043C9DB /* Color+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+.swift"; sourceTree = "<group>"; };
 		4A8E3C3927A977290043C9DB /* PlayerCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerCard.swift; sourceTree = "<group>"; };
 		4A8E3C3B27A978000043C9DB /* PrimaryBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryBackgroundView.swift; sourceTree = "<group>"; };
+		4A8E3C3F27A9F8420043C9DB /* PlayerDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerDetailsViewModel.swift; sourceTree = "<group>"; };
+		4A8E3C4127A9F9620043C9DB /* EditViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewModelProtocol.swift; sourceTree = "<group>"; };
 		4ACCC19227A8241800F96F31 /* SwiftUICoreData_MVVM.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftUICoreData_MVVM.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4ACCC19527A8241800F96F31 /* SwiftUICoreData_MVVMApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUICoreData_MVVMApp.swift; sourceTree = "<group>"; };
 		4ACCC19727A8241800F96F31 /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
@@ -124,9 +128,18 @@
 		4A8E3C3E27A9787A0043C9DB /* PlayerDetails */ = {
 			isa = PBXGroup;
 			children = (
-				4A8E3C3227A96B200043C9DB /* PlayerDetailsView.swift */,
+				4A8E3C3F27A9F8420043C9DB /* PlayerDetailsViewModel.swift */,
+				4A8E3C4327A9FD9F0043C9DB /* Views */,
 			);
 			path = PlayerDetails;
+			sourceTree = "<group>";
+		};
+		4A8E3C4327A9FD9F0043C9DB /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				4A8E3C3227A96B200043C9DB /* PlayerDetailsView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		4ACCC18927A8241800F96F31 = {
@@ -196,6 +209,7 @@
 			isa = PBXGroup;
 			children = (
 				4ACCC1C727A8A33200F96F31 /* ModelProtocol.swift */,
+				4A8E3C4127A9F9620043C9DB /* EditViewModelProtocol.swift */,
 				4ACCC1C427A89E4200F96F31 /* Player+.swift */,
 				4ACCC1CB27A8A53B00F96F31 /* FBIAgent+.swift */,
 				4ACCC1C927A8A39100F96F31 /* Game+.swift */,
@@ -348,8 +362,10 @@
 				4ACCC1CE27A8B12800F96F31 /* String+.swift in Sources */,
 				4ACCC1C827A8A33200F96F31 /* ModelProtocol.swift in Sources */,
 				4ACCC1C527A89E4200F96F31 /* Player+.swift in Sources */,
+				4A8E3C4027A9F8420043C9DB /* PlayerDetailsViewModel.swift in Sources */,
 				4A8E3C3327A96B200043C9DB /* PlayerDetailsView.swift in Sources */,
 				4ACCC19F27A8241900F96F31 /* CoreDataManager.swift in Sources */,
+				4A8E3C4227A9F9620043C9DB /* EditViewModelProtocol.swift in Sources */,
 				4ACCC1CA27A8A39100F96F31 /* Game+.swift in Sources */,
 				4ACCC1CC27A8A53B00F96F31 /* FBIAgent+.swift in Sources */,
 				4ACCC19827A8241800F96F31 /* DashboardView.swift in Sources */,

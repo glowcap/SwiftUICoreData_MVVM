@@ -7,6 +7,38 @@
 
 import SwiftUI
 
+struct CardTitleModifier: ViewModifier {
+  
+  func body(content: Content) -> some View {
+    content
+      .font(.caption)
+      .foregroundColor(.textSecondary)
+  }
+  
+}
+
+struct CardMainTextModifier: ViewModifier {
+  
+  func body(content: Content) -> some View {
+    content
+      .foregroundColor(.textPrimary)
+  }
+}
+
+extension View where Self == Text {
+
+  func cardTitle() -> some View {
+    modifier(CardTitleModifier())
+  }
+  
+  func cardMainText() -> some View {
+    self
+      .bold() /// bold needs to be done here as it can't be inferred by ViewModifier
+      .modifier(CardMainTextModifier())
+  }
+  
+}
+
 struct PlayerCard: View {
   static let height: CGFloat = 200
   var player: Player
@@ -15,20 +47,16 @@ struct PlayerCard: View {
     VStack {
       VStack(spacing: 4) {
         Text("Player")
-          .foregroundColor(.textSecondary)
-          .font(.caption)
+          .cardTitle()
         Text(player.name)
-          .bold()
-          .foregroundColor(.textPrimary)
+          .cardMainText()
       }
       .padding(.vertical)
       VStack(spacing: 4) {
         Text("Games Played")
-          .foregroundColor(.textSecondary)
-          .font(.caption)
+          .cardTitle()
         Text("\(player.games?.count ?? 0)")
-          .bold()
-          .foregroundColor(.textPrimary)
+          .cardMainText()
       }
       Spacer()
       HStack() {
@@ -42,7 +70,7 @@ struct PlayerCard: View {
     .frame(width: 240, height: PlayerCard.height)
     .background(
       LinearGradient(
-        colors: [Color("PlayerGradientStart"), Color("PlayerGradientStop")],
+        colors: [.seafoam, .bluesClues],
         startPoint: UnitPoint(x: 0.3, y: 0),
         endPoint: UnitPoint(x: 0.85, y: 1.0)
       )

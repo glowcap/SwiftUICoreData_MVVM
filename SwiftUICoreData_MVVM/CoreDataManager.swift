@@ -91,7 +91,7 @@ extension CoreDataManager {
   /// - Note: ⚠️ `objectID` is the only `NSManagedObject` property
   ///         that can be accessed safely across threads
   func editingCopy<T: NSManagedObject>(of object: T, in context: NSManagedObjectContext) -> T {
-    guard let object = try? context.existingObject(with: object.objectID) as? T
+    guard let object = (try? context.existingObject(with: object.objectID)) as? T
     else { fatalError("Requested copy of NSManagedObject that does NOT exist") }
     return object
   }
@@ -118,6 +118,15 @@ extension CoreDataManager {
       fatalError(
         "Failed to persist child context to view context\n🛑 error: \(errDesc)"
       )
+    }
+  }
+  
+  func persist2(_ object: NSManagedObject) {
+    try? object.managedObjectContext?.save()
+    if let parent = object.managedObjectContext?.parent {
+      parent.performAndWait {
+        try? parent.save()
+      }
     }
   }
   
