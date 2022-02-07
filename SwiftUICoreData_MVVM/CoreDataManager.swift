@@ -85,9 +85,9 @@ extension CoreDataManager {
     return T(context: context)
   }
   
-  /// Creates a clone of an existing `NSManagedObject` to be used in
+  /// Returns the exsiting `NSManagedObject` to be used in
   /// a `childViewContext`
-  /// - Returns: returns a clone of the `NSManagedObject` request
+  /// - Returns: returns the existing `NSManagedObject` requested or `Fatal Error` if it does not exist
   /// - Note: ⚠️ `objectID` is the only `NSManagedObject` property
   ///         that can be accessed safely across threads
   func editingCopy<T: NSManagedObject>(of object: T, in context: NSManagedObjectContext) -> T {

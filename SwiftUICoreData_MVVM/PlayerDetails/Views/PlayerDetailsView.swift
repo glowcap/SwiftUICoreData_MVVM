@@ -9,8 +9,12 @@ import SwiftUI
 
 struct PlayerDetailsView: View {
   @Environment(\.presentationMode) var presentationMode
-    
-  @State var viewModel: PlayerDetailsViewModel
+  
+  @State private var viewModel: PlayerDetailsViewModel
+
+  init(manager: CoreDataManager, player: Player? = nil) {
+    _viewModel = State(wrappedValue: PlayerDetailsViewModel(dataManager: manager, player: player))
+  }
   
   var body: some View {
     ZStack {
@@ -46,7 +50,8 @@ struct PlayerDetailsView: View {
 struct PlayerDetailsView_Previews: PreviewProvider {
 
   static var previews: some View {
-    return PlayerDetailsView(viewModel: PlayerDetailsViewModel(mock: true))
+    return PlayerDetailsView(manager: CoreDataManager.empty,
+                             player: Player.example(context: CoreDataManager.empty.container.viewContext))
   }
   
 }

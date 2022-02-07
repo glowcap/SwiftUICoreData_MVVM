@@ -41,7 +41,7 @@ extension View where Self == Text {
 
 struct PlayerCard: View {
   static let height: CGFloat = 200
-  var player: Player
+  @ObservedObject var player: Player
   
   var body: some View {
     VStack {

@@ -9,7 +9,7 @@ import SwiftUI
 import CoreData
 
 struct DashboardView: View {
-  @Environment(\.managedObjectContext) private var context
+//  @Environment(\.managedObjectContext) private var context
   
   /// although the fetchRequest stays in the view, the configuration
   /// of the fetch request can be moved to the view model
@@ -37,9 +37,7 @@ struct DashboardView: View {
             HStack {
               ForEach(players) { player in
                 NavigationLink {
-                  PlayerDetailsView(
-                    viewModel: viewModel.playerDetailsViewModel(dataManager: dataManager, player: player)
-                  )
+                  PlayerDetailsView(manager: dataManager, player: player)
                 } label: {
                   PlayerCard(player: player)
                     .padding(.vertical)
@@ -105,7 +103,7 @@ struct DashboardView: View {
             .shadow(color: .seafoam.opacity(0.4), radius: 4, x: 0, y: 0)
             .shadow(color: .bluesClues.opacity(0.4), radius: 4, x: 4, y: 4)
             NavigationLink {
-//              PlayerDetailsView(viewModel: vm.playerDetailsViewModel())
+              PlayerDetailsView(manager: dataManager)
             } label: {
               HStack {
                 Image(systemName: "plus")

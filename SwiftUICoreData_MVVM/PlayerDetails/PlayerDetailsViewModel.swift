@@ -27,7 +27,7 @@ struct PlayerDetailsViewModel: EditViewModel {
     if let player = player {
       /// set instance of original for deleting
 //      self.parentContextEntity = player
-      /// create editing copy for use in view
+      /// sets editing object in child context  for use in view
       self.model = dataManager.editingCopy(of: player, in: context)
     } else {
       /// create new player instance
