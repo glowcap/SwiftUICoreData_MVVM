@@ -8,29 +8,55 @@
 import CoreData
 import Foundation
 
-struct DashboardViewModel {
+protocol MockableViewModel {
+  static func mockViewModel(params: Any?...) -> Self
+}
 
-  func playerDetailsViewModel(dataManager: CoreDataManager, player: Player? = nil) -> PlayerDetailsViewModel {
-    return PlayerDetailsViewModel(dataManager: dataManager, player: player)
+struct DashboardViewModel: AddViewModel {
+ 
+  var context: NSManagedObjectContext
+  
+  init(dataManager: CoreDataManager) {
+    /// this is overkill in this particular situation, but could be useful
+    /// in other cases
+    self.context = dataManager.childViewContext()
   }
 
-//  /// This can be populated as needed
-//  func addPlayer(name: String) {
-//    let player = Player(context: context)
-//    player.name = name
-//    let agent = FBIAgent(context: context)
-//    agent.name = String(name.reversed())
-//    player.agent = FBIAgent.example(context: context)
-//
-//    dataManager.save()
-//  }
-//
-//  /// since we're only dealing with
-//  /// the main context, nothing special
-//  /// needs to be done here
-//  func delete(player: Player) {
-//    dataManager.delete(player)
-//    dataManager.save()
-//  }
+  func addGame(title: String) {
+    let game = Game(context: context)
+    game.title = title
+    persist(game)
+  }
 
+}
+
+extension DashboardViewModel: MockableViewModel {
+  
+  #if DEBUG
+  static func mockViewModel(params: Any?...) -> DashboardViewModel {
+    let manager = CoreDataManager.empty
+    let context = manager.container.viewContext
+    
+    for i in 0..<15 {
+      let player = Player.example(context: context)
+      player.name += String(i)
+      player.rank = i
+    }
+    
+    for i in 0..<10 {
+      let game = Game.example(context: context)
+      game.title += " part \(i + 1)"
+    }
+    
+    do {
+      try context.save()
+    } catch let error as NSError {
+      fatalError(CoreDataManager.previewError(error))
+    }
+    
+    let vm = DashboardViewModel(dataManager: manager)
+    return vm
+  }
+  #endif
+  
 }

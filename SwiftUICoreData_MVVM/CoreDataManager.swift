@@ -121,13 +121,4 @@ extension CoreDataManager {
     }
   }
   
-  func persist2(_ object: NSManagedObject) {
-    try? object.managedObjectContext?.save()
-    if let parent = object.managedObjectContext?.parent {
-      parent.performAndWait {
-        try? parent.save()
-      }
-    }
-  }
-  
 }

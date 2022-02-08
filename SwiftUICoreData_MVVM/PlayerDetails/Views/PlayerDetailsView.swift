@@ -12,7 +12,8 @@ struct PlayerDetailsView: View {
   
   @State private var viewModel: PlayerDetailsViewModel
 
-  init(manager: CoreDataManager, player: Player? = nil) {
+  init(player: Player? = nil) {
+    let manager = CoreDataManager.shared
     _viewModel = State(wrappedValue: PlayerDetailsViewModel(dataManager: manager, player: player))
   }
   
@@ -23,9 +24,9 @@ struct PlayerDetailsView: View {
         Text("Name")
           .foregroundColor(.bluesClues)
           .frame(maxWidth: .infinity, alignment: .leading)
-        TextField("Player Name", text: $viewModel.model.name)
+        TextField("Player Name", text: $viewModel.object.name)
           .textFieldStyle(.roundedBorder)
-        Text("Rank \(viewModel.model.rank)")
+        Text("Rank \(viewModel.object.rank)")
           .padding()
           .padding(.bottom, 100)
         Button {
@@ -47,11 +48,21 @@ struct PlayerDetailsView: View {
   
 }
 
+extension PlayerDetailsView {
+  
+  /// Mock init for use with Previews
+  /// - Parameter playerName: add
+  fileprivate init(playerName: String) {
+    let vm = PlayerDetailsViewModel.mockViewModel(params: playerName)
+    _viewModel = State(wrappedValue: vm)
+  }
+  
+}
+
 struct PlayerDetailsView_Previews: PreviewProvider {
 
   static var previews: some View {
-    return PlayerDetailsView(manager: CoreDataManager.empty,
-                             player: Player.example(context: CoreDataManager.empty.container.viewContext))
+    return PlayerDetailsView(playerName: "WeebyWaifu")
   }
   
 }

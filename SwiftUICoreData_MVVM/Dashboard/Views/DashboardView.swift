@@ -9,8 +9,7 @@ import SwiftUI
 import CoreData
 
 struct DashboardView: View {
-//  @Environment(\.managedObjectContext) private var context
-  
+
   /// although the fetchRequest stays in the view, the configuration
   /// of the fetch request can be moved to the view model
   @FetchRequest(fetchRequest: Player.fetch(), animation: .default)
@@ -20,10 +19,11 @@ struct DashboardView: View {
   /// the Pubishers to function properly
   private var players: FetchedResults<Player>
   
-  let viewModel = DashboardViewModel()
+  let viewModel: DashboardViewModel
   
-  @State var dataManager = CoreDataManager.shared
-  
+  init() {
+    viewModel = DashboardViewModel(dataManager: CoreDataManager.shared)
+  }
   
   @FetchRequest(fetchRequest: Game.fetch(), animation: .default)
   private var games: FetchedResults<Game>
@@ -37,16 +37,16 @@ struct DashboardView: View {
             HStack {
               ForEach(players) { player in
                 NavigationLink {
-                  PlayerDetailsView(manager: dataManager, player: player)
+                  PlayerDetailsView(player: player)
                 } label: {
-                  PlayerCard(player: player)
+                  PlayerCardView(player: player)
                     .padding(.vertical)
                     .padding(.horizontal, 4)
                 }
               }
             }
           }
-          .frame(height: PlayerCard.height)
+          .frame(height: PlayerCardView.height)
           .padding(.vertical, 20)
           if games.isEmpty {
             VStack(spacing: 8) {
@@ -79,8 +79,8 @@ struct DashboardView: View {
             }
           }
           HStack(spacing: 20) {
-            NavigationLink {
-//              PlayerDetailsView(viewModel: vm.playerDetailsViewModel())
+            Button {
+              addGame()
             } label: {
               HStack {
                 Image(systemName: "plus")
@@ -103,7 +103,7 @@ struct DashboardView: View {
             .shadow(color: .seafoam.opacity(0.4), radius: 4, x: 0, y: 0)
             .shadow(color: .bluesClues.opacity(0.4), radius: 4, x: 4, y: 4)
             NavigationLink {
-              PlayerDetailsView(manager: dataManager)
+              PlayerDetailsView()
             } label: {
               HStack {
                 Image(systemName: "plus")
@@ -129,75 +129,30 @@ struct DashboardView: View {
           .padding()
         }
       }
-      .toolbar {
-        ToolbarItem(placement: .navigationBarTrailing) {
-          EditButton()
-        }
-        ToolbarItem {
-          Button(action: addPlayer) {
-            Label("Add Item", systemImage: "plus")
-          }
-        }
-      }
       .navigationTitle("CoreData MVVM")
-      .foregroundColor(.seafoam)
     }
   }
   
-  private func addPlayer() {
+  private func addGame() {
     withAnimation {
-//      viewModel.addPlayer(name: "NewPlayer\(players.count)")
-    }
-  }
-  
-  private func deleteItems(offsets: IndexSet) {
-    withAnimation {
-      for index in offsets {
-        let player = players[index]
-//        viewModel.delete(player: player)
-      }
+      viewModel.addGame(title: "New Game \(games.count + 1)")
     }
   }
   
 }
 
-/// Configures a preview specifically for DashboardView
-/// This has been placed in the DashboardView file for ease
-/// of use when manipulating the preview content
-extension CoreDataManager {
+
+extension DashboardView {
   
-  static var dashboardPreviewDataManger: CoreDataManager {
-    let result = CoreDataManager(inMemory: true)
-    let context = result.container.viewContext
-    
-    for i in 0..<15 {
-      let player = Player.example(context: context)
-      player.name += String(i)
-      player.rank = i
-    }
-    
-    for i in 0..<10 {
-      let game = Game.example(context: context)
-      game.title += " part \(i + 1)"
-    }
-    
-    do {
-      try context.save()
-    } catch let error as NSError {
-      fatalError(CoreDataManager.previewError(error))
-    }
-  
-    return result
+  fileprivate init(mock: Bool) {
+    let vm = DashboardViewModel.mockViewModel(params: nil)
+    viewModel = vm
   }
   
 }
 
 struct DashboardView_Previews: PreviewProvider {
     static var previews: some View {
-      DashboardView()
-        .environment(
-          \.managedObjectContext,
-           CoreDataManager.dashboardPreviewDataManger.container.viewContext
-        )
+      DashboardView(mock: true)
     }
 }

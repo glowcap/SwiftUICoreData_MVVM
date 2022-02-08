@@ -16,7 +16,7 @@ protocol EditViewModel {
   associatedtype TempEntity: NSManagedObject
   
   /// working copy of the entity
-  var model: TempEntity { get set }
+  var object: TempEntity { get set }
   
   /// child context (scratch pad)
   var context: NSManagedObjectContext { get }
@@ -34,7 +34,7 @@ extension EditViewModel {
   
   /// saves the changes up through to the parent context
   func persist() {
-    CoreDataManager.shared.persist2(model)
+    CoreDataManager.shared.persist(object)
   }
   
   /// leverages the stored original entity for easy deletion

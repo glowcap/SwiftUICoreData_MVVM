@@ -17,7 +17,7 @@ struct PlayerDetailsViewModel: EditViewModel {
   /// this is used for deleting onlyx
   internal var parentContextEntity: Player?
   
-  var model: Player
+  var object: Player
   var context: NSManagedObjectContext
   var dataManager: CoreDataManager
   
@@ -26,31 +26,20 @@ struct PlayerDetailsViewModel: EditViewModel {
     self.context = dataManager.childViewContext()
     if let player = player {
       /// set instance of original for deleting
-//      self.parentContextEntity = player
+      self.parentContextEntity = player
       /// sets editing object in child context  for use in view
-      self.model = dataManager.editingCopy(of: player, in: context)
+      self.object = dataManager.editingCopy(of: player, in: context)
     } else {
       /// create new player instance
-      self.model = dataManager.newTemporaryInstance(in: context)
+      self.object = dataManager.newTemporaryInstance(in: context)
+      self.object.agent = FBIAgent(context: context) /// auto assign FBI Agent 🕵🏻‍♂️
     }
     /// stores CoreDataManager for deleting the model
-//    self.dataManager = dataManager
-    self.dataManager = CoreDataManager.shared
+    self.dataManager = dataManager
   }
-
-  #if DEBUG
-  /// Generates a mock of the Player for use with Previews
-  /// The `mock` param is really only there as a note
-  /// ⚠️ Do NOT test against this since it bypasses necessary initializations
-  init(mock: Bool) {
-    self.model = Player.example(context: CoreDataManager.empty.container.viewContext)
-    self.dataManager = CoreDataManager.empty
-    self.context = CoreDataManager.empty.container.viewContext
-  }
-  #endif
   
   func remove(game: Game) {
-    let games = model.mutableSetValue(forKey: Player.Relationship.games)
+    let games = object.mutableSetValue(forKey: Player.Relationship.games)
     for item in games {
       guard let deleteGame = item as? Game else { continue }
       if deleteGame.objectID.isEqual(game.objectID) {
@@ -59,5 +48,29 @@ struct PlayerDetailsViewModel: EditViewModel {
       }
     }
   }
+  
+}
+
+extension PlayerDetailsViewModel: MockableViewModel {
+  
+#if DEBUG
+/// Creates a mockViewModel to use with previews
+/// - Parameter playerName: `name` for mock player. If left empty, default name remains
+/// - Returns: `PlayerDetailsViewModel` based on `.empty` CoreDataManager construct
+/// - Note:  ⚠️ Do NOT test against this since it bypasses necessary initializations
+  static func mockViewModel(params: Any?...) -> PlayerDetailsViewModel {
+    let manager = CoreDataManager.empty
+    let context = manager.container.viewContext
+    let player = Player.example(context: context)
+    if let name = params.first as? String, !name.isEmpty {
+      player.name = name
+    }
+    player.agent = FBIAgent(context: context)
+    manager.save()
+    
+    let vm = PlayerDetailsViewModel(dataManager: manager, player: player)
+    return vm
+  }
+  #endif
   
 }

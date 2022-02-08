@@ -30,7 +30,7 @@ extension Game: Model {
   
   static func fetch() -> NSFetchRequest<Game> {
     let request = NSFetchRequest<Game>(entityName: Game.entity)
-    request.sortDescriptors = [NSSortDescriptor(keyPath: \Game.title_, ascending: false)]
+    request.sortDescriptors = [NSSortDescriptor(keyPath: \Game.title_, ascending: true)]
     request.predicate = NSPredicate(format: "TRUEPREDICATE")
     return request
   }

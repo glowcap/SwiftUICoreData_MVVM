@@ -16,12 +16,16 @@ struct SwiftUICoreData_MVVMApp: App {
   var body: some Scene {
     WindowGroup {
       DashboardView()
-        .environment(\.managedObjectContext, coreDataManager.container.viewContext)
+      /// setting an environment object for view context
+      /// is no longer needed as we need access to CoreDataManger
+      /// and trying to access the environment object on init throws
+      /// a "variabled used before init" error
+//        .environment(\.managedObjectContext, coreDataManager.container.viewContext)
     }
     .onChange(of: scenePhase) { phase in
       guard phase == .background else { return }
-      /// save on backgrounding
-      // dataManager.save()
+      /// save on backgrounding. Not using this now, but leaving it since it's a good one to remember
+      // coreDataManager.save()
     }
   }
   

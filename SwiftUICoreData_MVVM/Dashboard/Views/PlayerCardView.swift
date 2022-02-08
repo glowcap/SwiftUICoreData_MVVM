@@ -1,5 +1,5 @@
 //
-//  PlayerCard.swift
+//  PlayerCardView.swift
 //  SwiftUICoreData_MVVM
 //
 //  Created by Daymein Gregorio on 2/1/22.
@@ -39,7 +39,7 @@ extension View where Self == Text {
   
 }
 
-struct PlayerCard: View {
+struct PlayerCardView: View {
   static let height: CGFloat = 200
   @ObservedObject var player: Player
   
@@ -67,7 +67,7 @@ struct PlayerCard: View {
       }
     }
     .padding()
-    .frame(width: 240, height: PlayerCard.height)
+    .frame(width: 240, height: PlayerCardView.height)
     .background(
       LinearGradient(
         colors: [.seafoam, .bluesClues],
@@ -81,10 +81,23 @@ struct PlayerCard: View {
   }
 }
 
-struct PlayerCard_Previews: PreviewProvider {
+extension PlayerCardView {
+  
+  fileprivate init(mockPlayerName: String) {
+    let context = CoreDataManager.empty.container.viewContext
+    let player = Player.example(context: context)
+    if !mockPlayerName.isEmpty {
+      player.name = mockPlayerName
+    }
+    try! context.save()
+    _player = ObservedObject(wrappedValue: player)
+  }
+  
+}
+
+struct PlayerCardView_Previews: PreviewProvider {
   static var previews: some View {
-    PlayerCard(
-      player: Player.example(context: CoreDataManager.empty.container.viewContext))
+    PlayerCardView(mockPlayerName: "ThisIsFine")
       .scaledToFit()
   }
 }

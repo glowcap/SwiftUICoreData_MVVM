@@ -7,9 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4A057C1427B2A1D0006E6BE8 /* AddViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A057C1327B2A1D0006E6BE8 /* AddViewModelProtocol.swift */; };
 		4A8E3C3327A96B200043C9DB /* PlayerDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8E3C3227A96B200043C9DB /* PlayerDetailsView.swift */; };
 		4A8E3C3527A970110043C9DB /* Color+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8E3C3427A970110043C9DB /* Color+.swift */; };
-		4A8E3C3A27A977290043C9DB /* PlayerCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8E3C3927A977290043C9DB /* PlayerCard.swift */; };
+		4A8E3C3A27A977290043C9DB /* PlayerCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8E3C3927A977290043C9DB /* PlayerCardView.swift */; };
 		4A8E3C3C27A978000043C9DB /* PrimaryBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8E3C3B27A978000043C9DB /* PrimaryBackgroundView.swift */; };
 		4A8E3C4027A9F8420043C9DB /* PlayerDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8E3C3F27A9F8420043C9DB /* PlayerDetailsViewModel.swift */; };
 		4A8E3C4227A9F9620043C9DB /* EditViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8E3C4127A9F9620043C9DB /* EditViewModelProtocol.swift */; };
@@ -48,9 +49,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4A057C1327B2A1D0006E6BE8 /* AddViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddViewModelProtocol.swift; sourceTree = "<group>"; };
 		4A8E3C3227A96B200043C9DB /* PlayerDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerDetailsView.swift; sourceTree = "<group>"; };
 		4A8E3C3427A970110043C9DB /* Color+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+.swift"; sourceTree = "<group>"; };
-		4A8E3C3927A977290043C9DB /* PlayerCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerCard.swift; sourceTree = "<group>"; };
+		4A8E3C3927A977290043C9DB /* PlayerCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerCardView.swift; sourceTree = "<group>"; };
 		4A8E3C3B27A978000043C9DB /* PrimaryBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryBackgroundView.swift; sourceTree = "<group>"; };
 		4A8E3C3F27A9F8420043C9DB /* PlayerDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerDetailsViewModel.swift; sourceTree = "<group>"; };
 		4A8E3C4127A9F9620043C9DB /* EditViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewModelProtocol.swift; sourceTree = "<group>"; };
@@ -112,7 +114,7 @@
 			isa = PBXGroup;
 			children = (
 				4ACCC19727A8241800F96F31 /* DashboardView.swift */,
-				4A8E3C3927A977290043C9DB /* PlayerCard.swift */,
+				4A8E3C3927A977290043C9DB /* PlayerCardView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -210,6 +212,7 @@
 			children = (
 				4ACCC1C727A8A33200F96F31 /* ModelProtocol.swift */,
 				4A8E3C4127A9F9620043C9DB /* EditViewModelProtocol.swift */,
+				4A057C1327B2A1D0006E6BE8 /* AddViewModelProtocol.swift */,
 				4ACCC1C427A89E4200F96F31 /* Player+.swift */,
 				4ACCC1CB27A8A53B00F96F31 /* FBIAgent+.swift */,
 				4ACCC1C927A8A39100F96F31 /* Game+.swift */,
@@ -356,7 +359,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4ACCC1A227A8241900F96F31 /* SwiftUICoreData_MVVM.xcdatamodeld in Sources */,
-				4A8E3C3A27A977290043C9DB /* PlayerCard.swift in Sources */,
+				4A8E3C3A27A977290043C9DB /* PlayerCardView.swift in Sources */,
 				4A8E3C3527A970110043C9DB /* Color+.swift in Sources */,
 				4ACCC1D327A8B3A800F96F31 /* DashboardViewModel.swift in Sources */,
 				4ACCC1CE27A8B12800F96F31 /* String+.swift in Sources */,
@@ -364,6 +367,7 @@
 				4ACCC1C527A89E4200F96F31 /* Player+.swift in Sources */,
 				4A8E3C4027A9F8420043C9DB /* PlayerDetailsViewModel.swift in Sources */,
 				4A8E3C3327A96B200043C9DB /* PlayerDetailsView.swift in Sources */,
+				4A057C1427B2A1D0006E6BE8 /* AddViewModelProtocol.swift in Sources */,
 				4ACCC19F27A8241900F96F31 /* CoreDataManager.swift in Sources */,
 				4A8E3C4227A9F9620043C9DB /* EditViewModelProtocol.swift in Sources */,
 				4ACCC1CA27A8A39100F96F31 /* Game+.swift in Sources */,
