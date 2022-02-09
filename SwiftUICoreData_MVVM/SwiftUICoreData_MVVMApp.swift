@@ -9,18 +9,17 @@ import SwiftUI
 
 @main
 struct SwiftUICoreData_MVVMApp: App {
-  @Environment(\.scenePhase) var scenePhase
-  
   let coreDataManager = CoreDataManager.shared
-  
+  @Environment(\.scenePhase) var scenePhase
+    
   var body: some Scene {
     WindowGroup {
       DashboardView()
       /// setting an environment object for view context
-      /// is no longer needed as we need access to CoreDataManger
-      /// and trying to access the environment object on init throws
-      /// a "variabled used before init" error
-//        .environment(\.managedObjectContext, coreDataManager.container.viewContext)
+      /// is still needed for fetches to reach out to Core Data
+      /// However, trying to access the environment object on
+      /// init throws a "variabled used before init" error
+        .environment(\.managedObjectContext, coreDataManager.container.viewContext)
     }
     .onChange(of: scenePhase) { phase in
       guard phase == .background else { return }

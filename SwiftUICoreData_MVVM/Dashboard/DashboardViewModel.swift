@@ -8,15 +8,13 @@
 import CoreData
 import Foundation
 
-protocol MockableViewModel {
-  static func mockViewModel(params: Any?...) -> Self
-}
-
 struct DashboardViewModel: AddViewModel {
- 
+  
+  var dataManager: CoreDataManager
   var context: NSManagedObjectContext
   
   init(dataManager: CoreDataManager) {
+    self.dataManager = dataManager
     /// this is overkill in this particular situation, but could be useful
     /// in other cases
     self.context = dataManager.childViewContext()
@@ -30,10 +28,9 @@ struct DashboardViewModel: AddViewModel {
 
 }
 
-extension DashboardViewModel: MockableViewModel {
+extension CoreDataManager {
   
-  #if DEBUG
-  static func mockViewModel(params: Any?...) -> DashboardViewModel {
+  static var mockDashboardDataManager: CoreDataManager {
     let manager = CoreDataManager.empty
     let context = manager.container.viewContext
     
@@ -53,10 +50,7 @@ extension DashboardViewModel: MockableViewModel {
     } catch let error as NSError {
       fatalError(CoreDataManager.previewError(error))
     }
-    
-    let vm = DashboardViewModel(dataManager: manager)
-    return vm
+    return manager
   }
-  #endif
   
 }

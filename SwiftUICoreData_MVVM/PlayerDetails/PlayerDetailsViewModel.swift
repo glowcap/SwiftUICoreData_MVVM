@@ -51,7 +51,7 @@ struct PlayerDetailsViewModel: EditViewModel {
   
 }
 
-extension PlayerDetailsViewModel: MockableViewModel {
+extension PlayerDetailsViewModel {
   
 #if DEBUG
 /// Creates a mockViewModel to use with previews

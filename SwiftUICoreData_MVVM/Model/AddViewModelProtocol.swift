@@ -10,6 +10,8 @@ import Foundation
 
 protocol AddViewModel {
   
+  var dataManager: CoreDataManager { get }
+  
   /// child context (scratch pad)
   var context: NSManagedObjectContext { get }
   
@@ -21,7 +23,7 @@ extension AddViewModel {
   
   /// saves the changes up through to the parent context
   func persist(_ object: NSManagedObject) {
-    CoreDataManager.shared.persist(object)
+    dataManager.persist(object)
   }
   
 }

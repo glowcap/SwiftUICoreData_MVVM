@@ -9,6 +9,8 @@ import SwiftUI
 import CoreData
 
 struct DashboardView: View {
+  /// required for fetches
+  @Environment(\.managedObjectContext) private var viewContext
 
   /// although the fetchRequest stays in the view, the configuration
   /// of the fetch request can be moved to the view model
@@ -144,15 +146,17 @@ struct DashboardView: View {
 
 extension DashboardView {
   
-  fileprivate init(mock: Bool) {
-    let vm = DashboardViewModel.mockViewModel(params: nil)
-    viewModel = vm
+  
+  fileprivate init(mockManager: CoreDataManager) {
+    viewModel = DashboardViewModel(dataManager: CoreDataManager.empty)
   }
   
 }
 
 struct DashboardView_Previews: PreviewProvider {
     static var previews: some View {
-      DashboardView(mock: true)
+      let manager = CoreDataManager.mockDashboardDataManager
+      return DashboardView(mockManager: CoreDataManager.empty)
+        .environment(\.managedObjectContext, CoreDataManager.empty.container.viewContext)
     }
 }
