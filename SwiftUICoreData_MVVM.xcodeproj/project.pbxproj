@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		4A057C1427B2A1D0006E6BE8 /* AddViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A057C1327B2A1D0006E6BE8 /* AddViewModelProtocol.swift */; };
+		4A12B7FD27C3C69900D81FE9 /* GameListSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A12B7FC27C3C69900D81FE9 /* GameListSelectionView.swift */; };
+		4A12B80027C6720700D81FE9 /* ShadedPillButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A12B7FF27C6720700D81FE9 /* ShadedPillButtonStyle.swift */; };
+		4A12B80227C7C1C100D81FE9 /* GameListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A12B80127C7C1C100D81FE9 /* GameListViewModel.swift */; };
 		4A8E3C3327A96B200043C9DB /* PlayerDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8E3C3227A96B200043C9DB /* PlayerDetailsView.swift */; };
 		4A8E3C3527A970110043C9DB /* Color+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8E3C3427A970110043C9DB /* Color+.swift */; };
 		4A8E3C3A27A977290043C9DB /* PlayerCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8E3C3927A977290043C9DB /* PlayerCardView.swift */; };
@@ -50,6 +53,9 @@
 
 /* Begin PBXFileReference section */
 		4A057C1327B2A1D0006E6BE8 /* AddViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddViewModelProtocol.swift; sourceTree = "<group>"; };
+		4A12B7FC27C3C69900D81FE9 /* GameListSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameListSelectionView.swift; sourceTree = "<group>"; };
+		4A12B7FF27C6720700D81FE9 /* ShadedPillButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadedPillButtonStyle.swift; sourceTree = "<group>"; };
+		4A12B80127C7C1C100D81FE9 /* GameListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameListViewModel.swift; sourceTree = "<group>"; };
 		4A8E3C3227A96B200043C9DB /* PlayerDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerDetailsView.swift; sourceTree = "<group>"; };
 		4A8E3C3427A970110043C9DB /* Color+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+.swift"; sourceTree = "<group>"; };
 		4A8E3C3927A977290043C9DB /* PlayerCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerCardView.swift; sourceTree = "<group>"; };
@@ -101,6 +107,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4A12B7FE27C3C6A900D81FE9 /* GameList */ = {
+			isa = PBXGroup;
+			children = (
+				4A12B7FC27C3C69900D81FE9 /* GameListSelectionView.swift */,
+				4A12B80127C7C1C100D81FE9 /* GameListViewModel.swift */,
+			);
+			path = GameList;
+			sourceTree = "<group>";
+		};
 		4A8E3C3627A976F30043C9DB /* Dashboard */ = {
 			isa = PBXGroup;
 			children = (
@@ -123,6 +138,7 @@
 			isa = PBXGroup;
 			children = (
 				4A8E3C3B27A978000043C9DB /* PrimaryBackgroundView.swift */,
+				4A12B7FF27C6720700D81FE9 /* ShadedPillButtonStyle.swift */,
 			);
 			path = SharedViews;
 			sourceTree = "<group>";
@@ -170,6 +186,7 @@
 				4ACCC19527A8241800F96F31 /* SwiftUICoreData_MVVMApp.swift */,
 				4A8E3C3627A976F30043C9DB /* Dashboard */,
 				4A8E3C3E27A9787A0043C9DB /* PlayerDetails */,
+				4A12B7FE27C3C6A900D81FE9 /* GameList */,
 				4A8E3C3D27A978050043C9DB /* SharedViews */,
 				4ACCC19E27A8241900F96F31 /* CoreDataManager.swift */,
 				4A8E3C3427A970110043C9DB /* Color+.swift */,
@@ -358,6 +375,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4A12B80227C7C1C100D81FE9 /* GameListViewModel.swift in Sources */,
 				4ACCC1A227A8241900F96F31 /* SwiftUICoreData_MVVM.xcdatamodeld in Sources */,
 				4A8E3C3A27A977290043C9DB /* PlayerCardView.swift in Sources */,
 				4A8E3C3527A970110043C9DB /* Color+.swift in Sources */,
@@ -366,6 +384,7 @@
 				4ACCC1C827A8A33200F96F31 /* ModelProtocol.swift in Sources */,
 				4ACCC1C527A89E4200F96F31 /* Player+.swift in Sources */,
 				4A8E3C4027A9F8420043C9DB /* PlayerDetailsViewModel.swift in Sources */,
+				4A12B7FD27C3C69900D81FE9 /* GameListSelectionView.swift in Sources */,
 				4A8E3C3327A96B200043C9DB /* PlayerDetailsView.swift in Sources */,
 				4A057C1427B2A1D0006E6BE8 /* AddViewModelProtocol.swift in Sources */,
 				4ACCC19F27A8241900F96F31 /* CoreDataManager.swift in Sources */,
@@ -374,6 +393,7 @@
 				4ACCC1CC27A8A53B00F96F31 /* FBIAgent+.swift in Sources */,
 				4ACCC19827A8241800F96F31 /* DashboardView.swift in Sources */,
 				4ACCC19627A8241800F96F31 /* SwiftUICoreData_MVVMApp.swift in Sources */,
+				4A12B80027C6720700D81FE9 /* ShadedPillButtonStyle.swift in Sources */,
 				4A8E3C3C27A978000043C9DB /* PrimaryBackgroundView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

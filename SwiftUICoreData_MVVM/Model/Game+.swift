@@ -28,6 +28,14 @@ extension Game: Model {
     set { rating_ = Int16(newValue) }
   }
   
+  var playerList: [Player] {
+    get {
+      let set = players as? Set<Player> ?? []
+      return set.sorted { $0.name < $1.name }
+    }
+    set { players = NSSet(array: newValue) }
+  }
+  
   static func fetch() -> NSFetchRequest<Game> {
     let request = NSFetchRequest<Game>(entityName: Game.entity)
     request.sortDescriptors = [NSSortDescriptor(keyPath: \Game.title_, ascending: true)]

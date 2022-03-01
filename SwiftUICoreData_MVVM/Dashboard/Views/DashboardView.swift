@@ -93,17 +93,7 @@ struct DashboardView: View {
               .foregroundColor(.textPrimary)
               .padding()
             }
-            .frame(maxWidth: .infinity)
-            .background(
-              LinearGradient(
-                colors: [.seafoam, .bluesClues],
-                startPoint: UnitPoint(x: 0.2, y: 0.2),
-                endPoint: UnitPoint(x: 0.6, y: 1.8)
-              )
-            )
-            .clipShape(Capsule())
-            .shadow(color: .seafoam.opacity(0.4), radius: 4, x: 0, y: 0)
-            .shadow(color: .bluesClues.opacity(0.4), radius: 4, x: 4, y: 4)
+            .buttonStyle(.shadedPill)
             NavigationLink {
               PlayerDetailsView()
             } label: {
@@ -116,17 +106,7 @@ struct DashboardView: View {
               .foregroundColor(.textPrimary)
               .padding()
             }
-            .frame(maxWidth: .infinity)
-            .background(
-              LinearGradient(
-                colors: [.seafoam, .bluesClues],
-                startPoint: UnitPoint(x: 0.2, y: 0.2),
-                endPoint: UnitPoint(x: 0.6, y: 1.8)
-              )
-            )
-            .clipShape(Capsule())
-            .shadow(color: .seafoam.opacity(0.4), radius: 4, x: 0, y: 0)
-            .shadow(color: .bluesClues.opacity(0.4), radius: 4, x: 4, y: 4)
+            .buttonStyle(.shadedPill)
           }
           .padding()
         }
@@ -143,20 +123,12 @@ struct DashboardView: View {
   
 }
 
-
-extension DashboardView {
-  
-  
-  fileprivate init(mockManager: CoreDataManager) {
-    viewModel = DashboardViewModel(dataManager: CoreDataManager.empty)
-  }
-  
-}
-
 struct DashboardView_Previews: PreviewProvider {
     static var previews: some View {
-      let manager = CoreDataManager.mockDashboardDataManager
-      return DashboardView(mockManager: CoreDataManager.empty)
-        .environment(\.managedObjectContext, CoreDataManager.empty.container.viewContext)
+      return DashboardView()
+        .environment(
+          \.managedObjectContext,
+           CoreDataManager.mockDashboardDataManager.container.viewContext
+        )
     }
 }

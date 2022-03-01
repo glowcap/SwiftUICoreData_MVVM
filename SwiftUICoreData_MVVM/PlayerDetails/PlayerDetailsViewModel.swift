@@ -27,7 +27,7 @@ struct PlayerDetailsViewModel: EditViewModel {
     if let player = player {
       /// set instance of original for deleting
       self.parentContextEntity = player
-      /// sets editing object in child context  for use in view
+      /// sets editing object in child context for use in view
       self.object = dataManager.editingCopy(of: player, in: context)
     } else {
       /// create new player instance
@@ -36,6 +36,13 @@ struct PlayerDetailsViewModel: EditViewModel {
     }
     /// stores CoreDataManager for deleting the model
     self.dataManager = dataManager
+  }
+  
+  func save(with games: [Game]) {
+    // save any new games
+    let gamesCopy = editingCopy(games: games)
+    object.gameList = gamesCopy
+    persist()
   }
   
   func remove(game: Game) {
@@ -47,6 +54,10 @@ struct PlayerDetailsViewModel: EditViewModel {
         break
       }
     }
+  }
+  
+  private func editingCopy(games: [Game]) -> [Game] {
+    return games.map { dataManager.editingCopy(of: $0, in: context) }
   }
   
 }

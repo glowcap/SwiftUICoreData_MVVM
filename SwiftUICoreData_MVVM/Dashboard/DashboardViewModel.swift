@@ -33,23 +33,24 @@ extension CoreDataManager {
   static var mockDashboardDataManager: CoreDataManager {
     let manager = CoreDataManager.empty
     let context = manager.container.viewContext
+        
+    let games = Game.exampleSet(context: context)
+
+    try! context.save()
     
-    for i in 0..<15 {
-      let player = Player.example(context: context)
-      player.name += String(i)
-      player.rank = i
-    }
+//    for i in 0..<15 {
+//      let player = Player(context: context)
+//      player.name += "\(i)"
+//    }
     
-    for i in 0..<10 {
-      let game = Game.example(context: context)
-      game.title += " part \(i + 1)"
-    }
+//
+//    let player = Player.example(context: context)
+//    player.name = "Testing"
+//    player.rank = 99
+//    try! context.save()
     
-    do {
-      try context.save()
-    } catch let error as NSError {
-      fatalError(CoreDataManager.previewError(error))
-    }
+    try! context.save()
+
     return manager
   }
   

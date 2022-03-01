@@ -17,8 +17,8 @@
         <relationship name="games" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Game" inverseName="players" inverseEntity="Game"/>
     </entity>
     <elements>
-        <element name="FBIAgent" positionX="-184.4390869140625" positionY="106.0701904296875" width="128" height="88"/>
-        <element name="Game" positionX="-463.8613891601562" positionY="-129.7746887207031" width="128" height="88"/>
-        <element name="Player" positionX="-212.4754638671875" positionY="-204.3576049804688" width="128" height="103"/>
+        <element name="FBIAgent" positionX="81.4422607421875" positionY="-143.6649780273438" width="128" height="88"/>
+        <element name="Game" positionX="-470.4938964843749" positionY="-128.5213928222656" width="128" height="88"/>
+        <element name="Player" positionX="-207.9818725585938" positionY="-143.6239624023438" width="128" height="103"/>
     </elements>
 </model>

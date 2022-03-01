@@ -38,6 +38,15 @@ extension Player: Model {
     set { rank_ = Int16(newValue) }
   }
   
+  /// convenience to allow games to be used as Array
+  var gameList: [Game] {
+    get {
+      let set = games as? Set<Game> ?? []
+      return set.sorted { $0.title < $1.title }
+    }
+    set { games = NSSet(array: newValue) }
+  }
+  
   public override func awakeFromInsert() {
     setPrimitiveValue("New Player", forKey: Property.name)
   }
@@ -53,8 +62,6 @@ extension Player: Model {
     let player = Player(context: context)
     player.name = "xX_L337N05c0p3_Xx"
     player.rank = 1
-    player.agent = FBIAgent.example(context: context)
-    player.games = Set(Game.exampleSet(context: context)) as NSSet
     return player
   }
   

@@ -38,23 +38,19 @@ class SwiftUICoreData_MVVMTests: XCTestCase {
     let testingComponents = testingComponents(manager: manager)
     let sut = testingComponents.sut
     let player = testingComponents.player
-    
-    guard let gamesArr = sut.model.games?.allObjects else {
-      XCTFail("🚫 Games should NOT be nil")
-      return
-    }
+    let gamesArr = sut.object.gameList
     
     let gameCount = gamesArr.count
     print("FirstGameCount:", gameCount)
     XCTAssertGreaterThan(gameCount, 0, "games should NOT be empty")
-    guard let game = gamesArr.first as? Game
+    guard let game = gamesArr.first
     else { fatalError("should be Game object") }
     
     // 🧪 removing game
     sut.remove(game: game)
     
     // ☑️ verify working context
-    let finalGameCount = sut.model.games?.allObjects.count ?? 0
+    let finalGameCount = sut.object.gameList.count
     print("FinalGameCount:", finalGameCount)
     XCTAssertLessThan(
       finalGameCount,
@@ -75,12 +71,85 @@ class SwiftUICoreData_MVVMTests: XCTestCase {
     // required as test class cannot hold instance of PersistenceController
     addTeardownBlock {
       self.delete(player, in: manager)
-//      persistenceController.container.viewContext.delete(person)
+    }
+  }
+  
+  // MARK: - GameListViewModel
+  func test_addGame() {
+    let manager = CoreDataManager.empty
+    let (playerDetailsVM, player) = testingComponents(manager: CoreDataManager.empty)
+    let sut = GameListViewModel(
+                player: playerDetailsVM.object,
+                inContext: playerDetailsVM.context
+    )
+    
+    // 🧪 VM selectedGames set correctly
+    let playerGameStartCount = playerDetailsVM.object.gameList.count
+    let sutStartGameCount = sut.selectedGames.count
+    XCTAssertEqual(playerGameStartCount, sutStartGameCount,
+                   "🚫 selectedGames failed to set correctly")
+    
+    // 🧪 game added to selectedGames
+    let newGame = Game.example(context: playerDetailsVM.context)
+    sut.selection(newGame)
+    
+    let sutAddedGameCount = sut.selectedGames.count
+    XCTAssertEqual(sutAddedGameCount, sutStartGameCount + 1,
+                   "🚫 Game not added to selectedGames")
+    
+    // 🧪 game added to Player working copy
+    sut.updatePlayerSelections()
+    let playerAddedGameCount = sut.player.gameList.count
+    XCTAssertEqual(playerAddedGameCount, playerGameStartCount + 1,
+                   "🚫 Game not added to selectedGames")
+    
+    addTeardownBlock {
+      self.delete(player, in: manager)
+    }
+  }
+  
+  func test_removeGame() {
+    let manager = CoreDataManager.empty
+    let (playerDetailsVM, player) = testingComponents(manager: CoreDataManager.empty)
+    let sut = GameListViewModel(
+                player: playerDetailsVM.object,
+                inContext: playerDetailsVM.context
+    )
+    
+    // 🧪 VM selectedGames set correctly
+    let playerGameStartCount = playerDetailsVM.object.gameList.count
+    let sutStartGameCount = sut.selectedGames.count
+    XCTAssertEqual(playerGameStartCount, sutStartGameCount,
+                   "🚫 selectedGames failed to set correctly")
+    
+    // 🧪 game removed from selectedGames
+    guard let gameToRemove = sut.selectedGames.first else {
+      XCTFail("🚫 Failed to find game in selectedGames")
+      return
+    }
+    sut.selection(gameToRemove)
+    
+    let sutRemovedGameCount = sut.selectedGames.count
+    XCTAssertEqual(sutRemovedGameCount, sutStartGameCount - 1,
+                   "🚫 Game not removed from selectedGames")
+    
+    // 🧪 game removed from Player working copy
+    sut.updatePlayerSelections()
+    let playerRemovedGameCount = sut.player.gameList.count
+    XCTAssertEqual(playerRemovedGameCount, playerGameStartCount - 1,
+                   "🚫 Game not removed from selectedGames")
+    
+    addTeardownBlock {
+      self.delete(player, in: manager)
     }
   }
   
   private func testingComponents(manager: CoreDataManager) -> (sut: PlayerDetailsViewModel, player: Player) {
     let player = Player.example(context: manager.container.viewContext)
+    let agent = FBIAgent.example(context: manager.container.viewContext)
+    let games = [Game.example(context: manager.container.viewContext)]
+    player.agent = agent
+    player.gameList = games
     manager.save()
     
     let sut = PlayerDetailsViewModel(

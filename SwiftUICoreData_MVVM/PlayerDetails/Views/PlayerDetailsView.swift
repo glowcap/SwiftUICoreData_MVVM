@@ -11,6 +11,7 @@ struct PlayerDetailsView: View {
   @Environment(\.presentationMode) var presentationMode
   
   @State private var viewModel: PlayerDetailsViewModel
+  @State private var showingGameList = false
 
   init(player: Player? = nil) {
     let manager = CoreDataManager.shared
@@ -28,21 +29,68 @@ struct PlayerDetailsView: View {
           .textFieldStyle(.roundedBorder)
         Text("Rank \(viewModel.object.rank)")
           .padding()
-          .padding(.bottom, 100)
+          .padding(.bottom, viewModel.object.gameList.isEmpty ? 60 : 20)
+        if !viewModel.object.gameList.isEmpty {
+          ZStack {
+            ScrollView {
+              ForEach(viewModel.object.gameList) { game in
+                Text(game.title)
+                  .frame(maxWidth: .infinity)
+                  .padding(.vertical, 4)
+              }
+            }
+          }
+          .background(.ultraThickMaterial, in: RoundedRectangle(cornerRadius: 8))
+          .compositingGroup()
+          .shadow(color: .bluesClues.opacity(0.4), radius: 3, x: 3, y: 3)
+          .padding()
+        } else {
+          VStack {
+            Text("No Games for User")
+              .padding(.bottom, 40)
+          }
+        }
+        Spacer()
         Button {
-          save()
+          showingGameList = true
         } label: {
-          Text("Save")
+          Text(viewModel.object.gameList.isEmpty ? "Add Games" : "Edit Games")
             .bold()
-            .foregroundColor(.bluesClues)
+            .foregroundColor(.textPrimary)
+            .padding()
+        }
+        .buttonStyle(.shadedPill)
+        .padding()
+        HStack(spacing: 40) {
+          Button {
+            dismiss()
+          } label: {
+            Text("Cancel")
+              .bold()
+              .foregroundColor(.bluesClues)
+          }
+          Button {
+            save(games: viewModel.object.gameList)
+          } label: {
+            Text("Save")
+              .bold()
+              .foregroundColor(.bluesClues)
+          }
         }
       }
       .padding()
     }
+    .sheet(isPresented: $showingGameList) {
+      GameListSelectionView(for: viewModel.object, in: viewModel.context)
+    }
   }
   
-  private func save() {
-    viewModel.persist()
+  private func save(games: [Game]) {
+    viewModel.save(with: games)
+    dismiss()
+  }
+  
+  private func dismiss() {
     presentationMode.wrappedValue.dismiss()
   }
   

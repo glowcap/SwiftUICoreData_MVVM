@@ -84,15 +84,20 @@ struct PlayerCardView: View {
 extension PlayerCardView {
   
   fileprivate init(mockPlayerName: String) {
-    let context = CoreDataManager.empty.container.viewContext
-    let player = Player.example(context: context)
-    if !mockPlayerName.isEmpty {
-      player.name = mockPlayerName
-    }
-    try! context.save()
-    _player = ObservedObject(wrappedValue: player)
+    let context = CoreDataManager.mockPlayerCardManager.container.viewContext
+    _player = ObservedObject(wrappedValue: Player.example(context: context))
   }
   
+}
+
+extension CoreDataManager {
+  static var mockPlayerCardManager: CoreDataManager {
+    let manager = CoreDataManager.empty
+    let context = manager.container.viewContext
+    let player = Player.example(context: context)
+    try! context.save()
+    return manager
+  }
 }
 
 struct PlayerCardView_Previews: PreviewProvider {
